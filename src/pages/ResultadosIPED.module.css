@@ -1,0 +1,36 @@
+.resultContainer {
+  max-width: 600px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  padding: 28px;
+  font-family: "Roboto", sans-serif;
+}
+
+.title {
+  color: #9854e6;
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.fortalezaCard {
+  margin-bottom: 20px;
+  padding: 14px;
+  border-radius: 6px;
+  background: #f9f7ff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.fortalezaNombre {
+  font-size: 18px;
+  color: #6a4fff;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.fortalezaPuntaje {
+  font-size: 16px;
+  margin-top: 6px;
+}

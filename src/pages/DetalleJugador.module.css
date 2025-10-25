@@ -1,0 +1,68 @@
+.detalleContainer {
+  background: #ffffff;
+  padding: 28px;
+  border-radius: 10px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.1);
+  width: 100%;
+}
+
+.infoSection {
+  background: #f9fdf9;
+  border: 1px solid #d6eddc;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 25px;
+}
+
+.infoSection label {
+  display: block;
+  margin: 10px 0;
+  font-weight: 500;
+}
+
+.infoSection input, .infoSection textarea {
+  width: 100%;
+  border: 1px solid #cdd7df;
+  border-radius: 6px;
+  padding: 8px;
+  margin-top: 4px;
+  font-size: 15px;
+  outline-color: #31b27d;
+}
+
+.buttonGuardar {
+  background: #31b27d;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.buttonGuardar:hover {
+  background: #2a9468;
+}
+
+.graficoSection {
+  background: #f9faff;
+  border: 1px solid #d9e4f3;
+  border-radius: 10px;
+  padding: 18px;
+}
+
+.buttonCerrar {
+  margin-top: 20px;
+  background: #2779fc;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.buttonCerrar:hover {
+  background: #1b5edb;
+}
