@@ -158,7 +158,7 @@ function ResultadosIPED({ respuestas: propRespuestas }) {
       <div className={styles.cardsContainer}>
         {resultados.map(({ nombre, puntaje, promedio, nivel, rec }) => (
           <div key={nombre} className={styles.card}>
-            <h3 className={styles.nombreFortaleza}>{nombre.replace(/_/g, ' ')}</h3>
+            <h3 className={styles.nombreFortaleza}>{nombre.replace(/_/g, ' ').toUpperCase()}</h3>
             <div className={styles.puntaje}>
               <span className={styles.numero}>{promedio.toFixed(1)}</span>
               <span className={styles.maximo}>/5.0</span>

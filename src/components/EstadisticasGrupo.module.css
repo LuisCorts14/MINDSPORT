@@ -1,0 +1,377 @@
+.container {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 20px 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  margin-bottom: 24px;
+  border-bottom: 2px solid #1abc53;
+  padding-bottom: 16px;
+}
+
+.header h2 {
+  color: #1abc53;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.resumenGeneral {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.infoItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.label {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.valor {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1abc53;
+}
+
+.valor.alto {
+  color: #4caf50;
+}
+
+.valor.medio {
+  color: #ff9800;
+}
+
+.valor.bajo {
+  color: #f44336;
+}
+
+/* Controles de vista */
+.controles {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.btnVista {
+  padding: 10px 16px;
+  border: 2px solid #ddd;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  color: #333;
+}
+
+.btnVista:hover {
+  border-color: #1abc53;
+  color: #1abc53;
+  transform: translateY(-2px);
+}
+
+.btnVista.activo {
+  background: #1abc53;
+  color: white;
+  border-color: #1abc53;
+  box-shadow: 0 4px 12px rgba(26, 188, 83, 0.3);
+}
+
+/* Gráfico */
+.graficoContainer {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 24px;
+  position: relative;
+  height: 400px;
+}
+
+/* Tabla */
+.tablaContainer {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow-x: auto;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.tabla thead {
+  background: #f5f7fa;
+  border-bottom: 2px solid #1abc53;
+}
+
+.tabla thead th {
+  padding: 16px;
+  text-align: left;
+  font-weight: 700;
+  color: #333;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.tabla tbody tr {
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.3s ease;
+}
+
+.tabla tbody tr:hover {
+  background: #f9f9f9;
+}
+
+.tabla tbody td {
+  padding: 14px 16px;
+}
+
+.fortalezaNombre {
+  font-weight: 600;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.valor-alto {
+  color: #4caf50;
+  font-weight: 700;
+}
+
+.valor-medio {
+  color: #ff9800;
+  font-weight: 700;
+}
+
+.valor-bajo {
+  color: #f44336;
+  font-weight: 700;
+}
+
+.cantidad {
+  text-align: center;
+  font-weight: 600;
+}
+
+.row-alto {
+  border-left: 4px solid #4caf50;
+  background: rgba(76, 175, 80, 0.02);
+}
+
+.row-medio {
+  border-left: 4px solid #ff9800;
+  background: rgba(255, 152, 0, 0.02);
+}
+
+.row-bajo {
+  border-left: 4px solid #f44336;
+  background: rgba(244, 67, 54, 0.02);
+}
+
+/* Ranking */
+.rankingContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rankingItem {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.rankingItem:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.rankingHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.posicion {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #1abc53, #15a043);
+  color: white;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.nombreFortaleza {
+  flex: 1;
+  font-weight: 700;
+  font-size: 14px;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 14px;
+  color: white;
+}
+
+.badge-alto {
+  background: #4caf50;
+}
+
+.badge-medio {
+  background: #ff9800;
+}
+
+.badge-bajo {
+  background: #f44336;
+}
+
+.barraProgreso {
+  width: 100%;
+  height: 12px;
+  background: #e0e0e0;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.relleno {
+  height: 100%;
+  background: #1abc53;
+  transition: width 0.5s ease;
+  border-radius: 6px;
+}
+
+.relleno-alto {
+  background: linear-gradient(90deg, #4caf50, #45a049);
+}
+
+.relleno-medio {
+  background: linear-gradient(90deg, #ff9800, #f57c00);
+}
+
+.relleno-bajo {
+  background: linear-gradient(90deg, #f44336, #da190b);
+}
+
+.detalles {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #666;
+  gap: 12px;
+}
+
+.detalles span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.loading,
+.noData {
+  background: white;
+  padding: 40px 24px;
+  border-radius: 8px;
+  text-align: center;
+  color: #666;
+  font-size: 16px;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+  }
+
+  .header h2 {
+    font-size: 18px;
+  }
+
+  .resumenGeneral {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .infoItem {
+    flex: 1;
+    justify-content: space-between;
+  }
+
+  .controles {
+    flex-direction: column;
+  }
+
+  .btnVista {
+    flex: 1;
+  }
+
+  .graficoContainer {
+    height: 300px;
+  }
+
+  .tabla {
+    font-size: 12px;
+  }
+
+  .tabla thead th,
+  .tabla tbody td {
+    padding: 8px 12px;
+  }
+
+  .rankingHeader {
+    flex-wrap: wrap;
+  }
+
+  .nombreFortaleza {
+    flex: 1 100%;
+  }
+
+  .detalles {
+    flex-direction: column;
+  }
+}

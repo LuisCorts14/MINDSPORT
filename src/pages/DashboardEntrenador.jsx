@@ -6,6 +6,7 @@ import Configuracion from "../components/Configuracion";
 import Header from "../components/Header";
 import UnifiedButton from "../components/UnifiedButton";
 import InfoCard from "../components/InfoCard";
+import EstadisticasGrupo from "../components/EstadisticasGrupo";
 import { obtenerHistorialNotas } from "../services/futbolistaService";
 
 function DashboardEntrenador() {
@@ -16,6 +17,7 @@ function DashboardEntrenador() {
   const [user, setUser] = useState(null);
   const [errorPerfil, setErrorPerfil] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [testTypeEstadisticas, setTestTypeEstadisticas] = useState('IED');
   
   // Estados para el historial de notas
   const [mostrarHistorial, setMostrarHistorial] = useState(false);
@@ -374,32 +376,49 @@ function DashboardEntrenador() {
                   />
                 ) : (
                   <>
-                    <h2 style={{ 
-                      margin: '0 0 24px 0', 
-                      color: '#009688', 
-                      fontSize: '24px',
-                      fontWeight: '600'
-                    }}>
-                      Estadísticas del grupo
-                    </h2>
                     {futbolistas.length > 0 ? (
                       <>
                         <div style={{ 
-                          marginBottom: "24px",
-                          padding: "16px",
-                          background: "#f6fafd",
-                          borderRadius: "12px",
-                          border: "1px solid #e3f2fd"
+                          display: 'flex', 
+                          gap: '12px', 
+                          marginBottom: '24px',
+                          borderBottom: '2px solid #e0e0e0',
+                          paddingBottom: '16px'
                         }}>
-                          <p style={{ 
-                            margin: 0, 
-                            color: '#666',
-                            fontSize: '16px' 
-                          }}>
-                            Promedio grupal de rendimiento
-                          </p>
+                          <button
+                            onClick={() => setTestTypeEstadisticas('IED')}
+                            style={{
+                              padding: '10px 20px',
+                              border: 'none',
+                              borderRadius: '8px',
+                              background: testTypeEstadisticas === 'IED' ? '#1abc53' : '#f0f0f0',
+                              color: testTypeEstadisticas === 'IED' ? 'white' : '#333',
+                              cursor: 'pointer',
+                              fontWeight: '600',
+                              fontSize: '14px',
+                              transition: 'all 0.3s ease'
+                            }}
+                          >
+                            IED (5 Dimensiones)
+                          </button>
+                          <button
+                            onClick={() => setTestTypeEstadisticas('IPED')}
+                            style={{
+                              padding: '10px 20px',
+                              border: 'none',
+                              borderRadius: '8px',
+                              background: testTypeEstadisticas === 'IPED' ? '#6a4fff' : '#f0f0f0',
+                              color: testTypeEstadisticas === 'IPED' ? 'white' : '#333',
+                              cursor: 'pointer',
+                              fontWeight: '600',
+                              fontSize: '14px',
+                              transition: 'all 0.3s ease'
+                            }}
+                          >
+                            IPED (8 Dimensiones)
+                          </button>
                         </div>
-                        <ProgresoGrafico testType="IED" modoGrupal />
+                        <EstadisticasGrupo futbolistas={futbolistas} testType={testTypeEstadisticas} />
                       </>
                     ) : (
                       <InfoCard 

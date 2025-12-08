@@ -33,3 +33,117 @@
   font-size: 16px;
   margin-top: 6px;
 }
+
+.cardsContainer {
+  display: grid;
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.card {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.nombreFortaleza {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1abc53;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.puntaje {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.numero {
+  font-size: 32px;
+  font-weight: bold;
+  color: #1abc53;
+}
+
+.maximo {
+  font-size: 16px;
+  color: #666;
+}
+
+.nivel {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+  margin: 12px 0;
+}
+
+.nivel.bajo {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.nivel.medio {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.nivel.alto {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.recomendacion {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 16px;
+  border-left: 4px solid #1abc53;
+}
+
+.recomendacion strong {
+  color: #1abc53;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.recomendacion p {
+  margin: 8px 0;
+  color: #333;
+  line-height: 1.6;
+}
+
+.recomendacion ul {
+  margin: 12px 0;
+  padding-left: 20px;
+}
+
+.recomendacion li {
+  margin-bottom: 8px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.volverButton {
+  margin-bottom: 20px;
+}
+
+.titulo {
+  color: #1abc53;
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: 700;
+}
