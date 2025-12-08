@@ -5,7 +5,9 @@ import ResultadosIED from "./ResultadosIED";
 import ResultadosIPED from "./ResultadosIPED";
 import ProgresoGrafico from "../components/ProgresoGrafico";
 import Configuracion from "../components/Configuracion";
+import BibliotecaFortalezas from "../components/BibliotecaFortalezas";
 import Header from "../components/Header";
+import UnifiedButton from "../components/UnifiedButton";
 import styles from "./Dashboard.module.css";
 
 import { guardarHistorico } from "../utils/historicoUtils";
@@ -22,6 +24,7 @@ function Dashboard() {
   const [respuestasIPED, setRespuestasIPED] = useState(null);
   const [graficoTestType, setGraficoTestType] = useState("IED");
   const [mostrarConfiguracion, setMostrarConfiguracion] = useState(false);
+  const [mostrarBiblioteca, setMostrarBiblioteca] = useState(false);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("userData"));
@@ -56,6 +59,16 @@ function Dashboard() {
   if (errorPerfil) return <div>Error: {errorPerfil}</div>;
   if (!perfil) return <div>Cargando perfil...</div>;
 
+  // Mostrar Biblioteca de Fortalezas
+  if (mostrarBiblioteca && user.rol === "futbolista") {
+    return (
+      <div className={styles.container}>
+        <Header showLogout={true} user={user} />
+        <BibliotecaFortalezas onClose={() => setMostrarBiblioteca(false)} />
+      </div>
+    );
+  }
+
   return (
     <div className={styles.container}>
       <Header showLogout={true} user={user} />
@@ -63,13 +76,25 @@ function Dashboard() {
       {mostrarConfiguracion && user.rol === "futbolista" ? (
         <>
           <h1 className={styles.title}>Configuración de cuenta</h1>
-          <button
+          <UnifiedButton
             onClick={() => setMostrarConfiguracion(false)}
-            style={{ marginBottom: "1rem" }}
+            variant="outline"
+            size="medium"
+            style={{
+              marginBottom: "1rem",
+              border: "2px solid var(--primary-color, #009688)",
+              color: "var(--primary-color, #009688)",
+            }}
           >
             ← Volver al Dashboard
-          </button>
-          <Configuracion rol="futbolista" jugador={perfil} />
+          </UnifiedButton>
+          <Configuracion
+            rol="futbolista"
+            jugador={perfil}
+            nombreEntrenador={perfil.nombreEntrenador}
+            token={user.token}
+            userId={user.id}
+          />
         </>
       ) : (
         <>
@@ -78,14 +103,44 @@ function Dashboard() {
           <h3 className={styles.role}>Rol: {perfil.rol || "Desconocido"}</h3>
 
           {perfil.rol === "futbolista" && (
-            <>
-              <button
-                onClick={() => setMostrarConfiguracion(true)}
-                style={{ marginBottom: "1rem" }}
-              >
-                Configuración de cuenta
-              </button>
+            <div>
+              <p>
+                <strong>Entrenador asignado:</strong>{" "}
+                {perfil.nombreEntrenador
+                  ? perfil.nombreEntrenador
+                  : "Sin entrenador asignado"}
+              </p>
 
+              <div style={{ display: "flex", gap: "1rem", marginBottom: "1rem", flexWrap: "wrap" }}>
+                <UnifiedButton
+                  onClick={() => setMostrarConfiguracion(true)}
+                  variant="outline"
+                  size="medium"
+                  style={{
+                    border: "2px solid var(--primary-color, #009688)",
+                    color: "var(--primary-color, #009688)",
+                  }}
+                >
+                  ⚙️ Configuración de cuenta
+                </UnifiedButton>
+
+                <UnifiedButton
+                  onClick={() => setMostrarBiblioteca(true)}
+                  variant="outline"
+                  size="medium"
+                  style={{
+                    border: "2px solid #1abc53",
+                    color: "#1abc53",
+                  }}
+                >
+                  📚 Biblioteca de Fortalezas
+                </UnifiedButton>
+              </div>
+            </div>
+          )}
+
+          {perfil.rol === "futbolista" && (
+            <>
               <div className={styles.dashboardGrid}>
                 <div className={styles.leftColumn}>
                   {!testActivo && !respuestasIED && !respuestasIPED && (
@@ -115,9 +170,7 @@ function Dashboard() {
                           resultados y visualizará tu progreso en el gráfico de la
                           derecha.
                         </p>
-                        <p>
-                          ¡Comienza tu camino hacia la excelencia mental deportiva!
-                        </p>
+                        <p>¡Comienza tu camino hacia la excelencia mental deportiva!</p>
                       </div>
                       <div
                         className={styles.testSelectionContainer}
@@ -139,6 +192,18 @@ function Dashboard() {
                             borderRadius: 12,
                             boxShadow: "0 2px 12px rgba(0, 123, 255, 0.1)",
                             textAlign: "center",
+                            transition: "all 0.3s ease-in-out",
+                            border: "2px solid transparent",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.target.style.transform = "translateY(-4px)";
+                            e.target.style.boxShadow = "0 8px 25px rgba(0, 123, 255, 0.15)";
+                            e.target.style.borderColor = "#007bff";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.target.style.transform = "translateY(0)";
+                            e.target.style.boxShadow = "0 2px 12px rgba(0, 123, 255, 0.1)";
+                            e.target.style.borderColor = "transparent";
                           }}
                         >
                           <h2>IED</h2>
@@ -147,13 +212,17 @@ function Dashboard() {
                             emociones en el juego. Recibe recomendaciones prácticas
                             y análisis de tu perfil emocional.
                           </p>
-                          <button
-                            className={styles.button}
+                          <UnifiedButton
                             onClick={() => setTestActivo("IED")}
-                            style={{ marginTop: 20 }}
+                            variant="secondary"
+                            size="medium"
+                            style={{
+                              marginTop: 20,
+                              backgroundColor: "#007bff",
+                            }}
                           >
-                            Comenzar Test IED
-                          </button>
+                            🧠 Comenzar Test IED
+                          </UnifiedButton>
                         </div>
                         <div
                           className={styles.testContainer}
@@ -165,6 +234,18 @@ function Dashboard() {
                             borderRadius: 12,
                             boxShadow: "0 2px 12px rgba(128, 90, 255, 0.1)",
                             textAlign: "center",
+                            transition: "all 0.3s ease-in-out",
+                            border: "2px solid transparent",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.target.style.transform = "translateY(-4px)";
+                            e.target.style.boxShadow = "0 8px 25px rgba(128, 90, 255, 0.15)";
+                            e.target.style.borderColor = "#6a4fff";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.target.style.transform = "translateY(0)";
+                            e.target.style.boxShadow = "0 2px 12px rgba(128, 90, 255, 0.1)";
+                            e.target.style.borderColor = "transparent";
                           }}
                         >
                           <h2>IPED</h2>
@@ -174,51 +255,71 @@ function Dashboard() {
                             Conócete mejor y mejora tu rendimiento con
                             recomendaciones personalizadas.
                           </p>
-                          <button
-                            className={styles.button}
+                          <UnifiedButton
                             onClick={() => setTestActivo("IPED")}
-                            style={{ marginTop: 20 }}
+                            variant="primary"
+                            size="medium"
+                            style={{
+                              marginTop: 20,
+                              backgroundColor: "#6a4fff",
+                            }}
                           >
-                            Comenzar Test IPED
-                          </button>
+                            🎯 Comenzar Test IPED
+                          </UnifiedButton>
                         </div>
                       </div>
                     </>
                   )}
                   {testActivo === "IED" && !respuestasIED && (
-                    <TestIED onSubmit={handleFinishIED} />
+                    <TestIED
+                      onSubmit={handleFinishIED}
+                      onCancel={() => setTestActivo(null)}
+                    />
                   )}
                   {testActivo === "IPED" && !respuestasIPED && (
-                    <TestIPED onSubmit={handleFinishIPED} />
+                    <TestIPED
+                      onSubmit={handleFinishIPED}
+                      onCancel={() => setTestActivo(null)}
+                    />
                   )}
                   {respuestasIED && (
                     <>
                       <ResultadosIED respuestas={respuestasIED} />
-                      <button
-                        className={styles.button}
+                      <UnifiedButton
                         onClick={() => {
                           setTestActivo(null);
                           setRespuestasIED(null);
                         }}
-                        style={{ marginTop: 20 }}
+                        variant="outline"
+                        size="medium"
+                        style={{
+                          marginTop: 20,
+                          border: "2px solid var(--success-color, #4CAF50)",
+                          color: "var(--success-color, #4CAF50)",
+                        }}
                       >
-                        Volver a selección de test
-                      </button>
+                        ← Volver a selección de test
+                      </UnifiedButton>
                     </>
                   )}
                   {respuestasIPED && (
                     <>
                       <ResultadosIPED respuestas={respuestasIPED} />
-                      <button
-                        className={styles.button}
+                      <UnifiedButton
                         onClick={() => {
                           setTestActivo(null);
                           setRespuestasIPED(null);
                         }}
-                        style={{ marginTop: 20 }}
+                        variant="outline"
+                        size="medium"
+                        style={{
+                          marginTop: 20,
+                          border: "2px solid #6a4fff",
+                          color: "#6a4fff",
+                        }}
                       >
-                        Volver a selección de test
-                      </button>
+                        ← Volver a selección de test
+                      </UnifiedButton>
                     </>
                   )}
                 </div>
@@ -229,26 +330,26 @@ function Dashboard() {
                     repites los tests. Elige el test que deseas observar:
                   </p>
                   <div style={{ display: "flex", gap: 12, marginBottom: 10 }}>
-                    <button
-                      className={styles.button}
-                      style={{
-                        backgroundColor:
-                          graficoTestType === "IED" ? "#31b27d" : "#2779fc",
-                      }}
+                    <UnifiedButton
+                      variant="success"
+                      size="medium"
                       onClick={() => setGraficoTestType("IED")}
-                    >
-                      Ver IED
-                    </button>
-                    <button
-                      className={styles.button}
                       style={{
-                        backgroundColor:
-                          graficoTestType === "IPED" ? "#845de2" : "#2779fc",
+                        backgroundColor: graficoTestType === "IED" ? "#1abc53" : undefined,
                       }}
-                      onClick={() => setGraficoTestType("IPED")}
                     >
-                      Ver IPED
-                    </button>
+                      📊 Ver IED
+                    </UnifiedButton>
+                    <UnifiedButton
+                      variant="primary"
+                      size="medium"
+                      onClick={() => setGraficoTestType("IPED")}
+                      style={{
+                        backgroundColor: graficoTestType === "IPED" ? "#6a4fff" : undefined,
+                      }}
+                    >
+                      📈 Ver IPED
+                    </UnifiedButton>
                   </div>
                   <ProgresoGrafico testType={graficoTestType} />
                 </div>

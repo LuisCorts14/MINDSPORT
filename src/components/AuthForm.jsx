@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import UnifiedButton from './UnifiedButton';
 
 function AuthForm({ mode, color, onSubmit }) {
   const [isRegister, setIsRegister] = useState(false);
@@ -22,19 +23,39 @@ function AuthForm({ mode, color, onSubmit }) {
       <h2 style={{ color, textAlign: 'center' }}>
         {isRegister ? 'Crear Cuenta' : 'Iniciar Sesión'} - {mode === 'futbolista' ? 'Futbolista' : 'Entrenador'}
       </h2>
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
-        <button
-          style={{ flex: 1, padding: '8px', backgroundColor: !isRegister ? color : '#eee', color: !isRegister ? '#fff' : '#333', border: 'none', cursor: 'pointer' }}
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px', gap: '4px' }}>
+        <UnifiedButton
+          variant={!isRegister ? 'primary' : 'outline'}
+          size="small"
           onClick={() => setIsRegister(false)}
+          style={{ 
+            flex: 1, 
+            borderRadius: '8px 0 0 8px',
+            ...(isRegister ? { 
+              backgroundColor: 'transparent', 
+              color: color,
+              border: `2px solid ${color}` 
+            } : {})
+          }}
         >
           Iniciar Sesión
-        </button>
-        <button
-          style={{ flex: 1, padding: '8px', backgroundColor: isRegister ? color : '#eee', color: isRegister ? '#fff' : '#333', border: 'none', cursor: 'pointer' }}
+        </UnifiedButton>
+        <UnifiedButton
+          variant={isRegister ? 'primary' : 'outline'}
+          size="small"
           onClick={() => setIsRegister(true)}
+          style={{ 
+            flex: 1, 
+            borderRadius: '0 8px 8px 0',
+            ...(isRegister ? {} : { 
+              backgroundColor: 'transparent', 
+              color: color,
+              border: `2px solid ${color}` 
+            })
+          }}
         >
           Registrarse
-        </button>
+        </UnifiedButton>
       </div>
       <form onSubmit={handleSubmit}>
         {isRegister && (
@@ -63,12 +84,18 @@ function AuthForm({ mode, color, onSubmit }) {
           required
           style={{ width: '100%', padding: '8px', marginBottom: '20px', borderRadius: '6px', border: '1px solid #ccc' }}
         />
-        <button
+        <UnifiedButton
           type="submit"
-          style={{ backgroundColor: color, color: '#fff', border: 'none', padding: '12px 20px', borderRadius: '8px', width: '100%', fontWeight: 'bold', cursor: 'pointer' }}
+          variant="primary"
+          size="large"
+          style={{ 
+            width: '100%',
+            backgroundColor: color,
+            marginTop: '4px'
+          }}
         >
           {isRegister ? 'Crear cuenta' : 'Entrar'}
-        </button>
+        </UnifiedButton>
       </form>
     </div>
   );

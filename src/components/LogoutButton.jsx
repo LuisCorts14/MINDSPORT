@@ -1,6 +1,7 @@
 // src/components/LogoutButton.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import UnifiedButton from './UnifiedButton';
 
 export default function LogoutButton() {
   const navigate = useNavigate();
@@ -11,19 +12,13 @@ export default function LogoutButton() {
   };
 
   return (
-    <button
+    <UnifiedButton
       onClick={handleLogout}
-      style={{
-        backgroundColor: '#e74c3c',
-        border: 'none',
-        color: 'white',
-        padding: '8px 14px',
-        borderRadius: '4px',
-        cursor: 'pointer',
-      }}
+      variant="danger"
+      size="small"
       title="Cerrar sesión"
     >
       Cerrar sesión
-    </button>
+    </UnifiedButton>
   );
 }

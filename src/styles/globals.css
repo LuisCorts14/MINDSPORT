@@ -1,0 +1,183 @@
+/* Global Variables - Unified Design System */
+:root {
+  /* Color Palette - Manteniendo tus colores existentes */
+  --primary-color: #009688;
+  --primary-hover: #007d6e;
+  --primary-light: #b3d9d4;
+  --primary-bg: #e9f5ff;
+  
+  --secondary-color: #007bff;
+  --secondary-hover: #0056b3;
+  --secondary-light: #b3d1ff;
+  
+  --success-color: #4CAF50;
+  --success-hover: #45a049;
+  --success-light: #e8f5e8;
+  
+  --warning-color: #ff9800;
+  --warning-hover: #e68900;
+  --warning-light: #ffcc80;
+  
+  --danger-color: #e74c3c;
+  --danger-hover: #c0392b;
+  --danger-light: #ffeaea;
+  
+  /* Test specific colors */
+  --ied-color: #1abc53;
+  --iped-color: #6a4fff;
+  
+  /* Neutral colors */
+  --white: #ffffff;
+  --gray-50: #f8f9fa;
+  --gray-100: #f6fafd;
+  --gray-200: #e3f2fd;
+  --gray-300: #ccc;
+  --gray-500: #666;
+  --gray-700: #333;
+  --gray-900: #1a1a1a;
+  
+  /* Background variations */
+  --bg-primary-light: #f6fafd;
+  --bg-success-light: #e8f5e8;
+  --bg-danger-light: #ffeaea;
+  --bg-warning-light: #fff8e1;
+  
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-lg: 0 4px 12px rgba(0,0,0,0.1);
+  --shadow-button: 0 2px 4px rgba(0,0,0,0.1);
+  --shadow-button-hover: 0 4px 8px rgba(0,0,0,0.15);
+  
+  /* Typography */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 600;
+  
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  
+  /* Transitions */
+  --transition-fast: all 0.2s ease-in-out;
+  --transition-normal: all 0.3s ease-in-out;
+}
+
+/* Global styles for consistent appearance */
+* {
+  box-sizing: border-box;
+}
+
+/* Consistent button hover effects */
+.btn-hover-effect {
+  transition: var(--transition-fast);
+}
+
+.btn-hover-effect:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-button-hover);
+}
+
+/* Card styles */
+.card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-lg);
+  border: 1px solid var(--gray-200);
+}
+
+.card-info {
+  background: var(--bg-primary-light);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+}
+
+/* Status badges */
+.badge-success {
+  background: var(--success-light);
+  color: var(--success-color);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.badge-primary {
+  background: var(--primary-light);
+  color: var(--primary-color);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Form inputs consistency */
+.input-unified {
+  width: 100%;
+  padding: var(--spacing-sm);
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-md);
+  transition: var(--transition-fast);
+}
+
+.input-unified:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(0, 150, 136, 0.2);
+}
+
+/* Alert styles */
+.alert {
+  padding: var(--spacing-md);
+  border-radius: var(--radius-lg);
+  border: 1px solid;
+  margin: var(--spacing-md) 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.alert-success {
+  background: var(--bg-success-light);
+  border-color: var(--success-color);
+  color: var(--gray-700);
+}
+
+.alert-danger {
+  background: var(--bg-danger-light);
+  border-color: var(--danger-color);
+  color: var(--gray-700);
+}
+
+/* Loading spinner */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}

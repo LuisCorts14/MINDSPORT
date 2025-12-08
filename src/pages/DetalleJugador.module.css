@@ -20,7 +20,7 @@
   font-weight: 500;
 }
 
-.infoSection input, .infoSection textarea {
+.infoSection input, .infoSection textarea, .infoSection select {
   width: 100%;
   border: 1px solid #cdd7df;
   border-radius: 6px;
@@ -28,21 +28,105 @@
   margin-top: 4px;
   font-size: 15px;
   outline-color: #31b27d;
+  background-color: white;
+}
+
+/* Estilos específicos para el select de posición */
+.posicionSelect {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2331b27d' stroke-width='2'><polyline points='6,9 12,15 18,9'></polyline></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+  padding-right: 40px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.posicionSelect:hover {
+  border-color: #31b27d;
+  background-color: #f9fdf9;
+}
+
+.posicionSelect:focus {
+  border-color: #31b27d;
+  box-shadow: 0 0 0 3px rgba(49, 178, 125, 0.1);
+  outline: none;
+  background-color: white;
+}
+
+.posicionSelect option {
+  padding: 12px;
+  font-size: 14px;
+  line-height: 1.4;
+  background-color: white;
+}
+
+.posicionSelect option:first-child {
+  color: #999;
+  font-style: italic;
+  background-color: #f8f9fa;
+}
+
+.posicionSelect option:hover {
+  background-color: #f0f9f4;
+}
+
+.posicionSelect option:disabled {
+  color: #999 !important;
+  background-color: #f8f9fa !important;
+  cursor: not-allowed;
+}
+
+/* Contenedor de botones */
+.buttonContainer {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
 }
 
 .buttonGuardar {
   background: #31b27d;
   color: white;
   border: none;
-  padding: 10px 16px;
-  border-radius: 6px;
+  padding: 12px 20px;
+  border-radius: 8px;
   cursor: pointer;
-  margin-top: 10px;
   font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  flex: 1;
+  min-width: 140px;
 }
 
 .buttonGuardar:hover {
   background: #2a9468;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(49, 178, 125, 0.3);
+}
+
+.buttonHistorial {
+  background: #2196F3;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  flex: 1;
+  min-width: 180px;
+}
+
+.buttonHistorial:hover {
+  background: #1976D2;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(33, 150, 243, 0.3);
 }
 
 .graficoSection {
