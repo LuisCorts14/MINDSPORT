@@ -4,8 +4,8 @@
 
 MINDSPORT es una plataforma integral para evaluar competencias psicológicas en deportistas, utilizando dos instrumentos psicométricos:
 
-- **IED (Inteligencia Emocional Deportiva)**: 5 dimensiones
-- **IPED (Inteligencia Psicológica del Deportista)**: 8 dimensiones
+- **IED (Inteligencia Emocional Deportiva)**: 4 dimensiones
+- **IPED (Inteligencia Psicológica del Deportista)**: 7 dimensiones
 
 ## 🏗️ Estructura del Proyecto
 

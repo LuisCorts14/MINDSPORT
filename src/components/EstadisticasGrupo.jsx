@@ -131,19 +131,19 @@ function EstadisticasGrupo({ futbolistas, testType = 'IED' }) {
           className={`${styles.btnVista} ${vistaActual === 'grafico' ? styles.activo : ''}`}
           onClick={() => handleChangeVista('grafico')}
         >
-          📈 Gráfico
+          Gráfico
         </button>
         <button
           className={`${styles.btnVista} ${vistaActual === 'tabla' ? styles.activo : ''}`}
           onClick={() => handleChangeVista('tabla')}
         >
-          📋 Tabla
+          Tabla
         </button>
         <button
           className={`${styles.btnVista} ${vistaActual === 'ranking' ? styles.activo : ''}`}
           onClick={() => handleChangeVista('ranking')}
         >
-          🏆 Ranking
+          Ranking
         </button>
       </div>
 

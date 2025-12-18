@@ -26,7 +26,7 @@ function Home() {
       </div>
 
 
-      <main style={{ paddingTop: 40 }}>
+      <main style={{ paddingTop: 40, paddingBottom: 80 }}>
         <section style={{ display: 'flex', justifyContent: 'center', gap: 40 }}>
           <CardModo
             title="Modo Futbolista"
@@ -47,7 +47,7 @@ function Home() {
             items={[
               "Vista global del equipo",
               "Comparativas entre jugadores",
-              "Estadísticas y tendencias",
+              "Estad\u00EDsticas y tendencias",
               "Reportes detallados"
             ]}
             onClick={() => navigate("/login-entrenador")}

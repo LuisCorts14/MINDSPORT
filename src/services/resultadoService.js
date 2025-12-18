@@ -28,11 +28,15 @@ export async function guardarResultado(respuestas, puntajes, tipoTest) {
             respuestasMap[key.toString()] = respuestas[key];
         });
 
-        // El modelo Java espera Map<String, Integer> para puntajes, no objetos complejos
-        const puntajesSimplificados = {};
+        // El modelo Java espera Map<String, Object> para puntajes con estructura completa
+        const puntajesCompletos = {};
         Object.keys(puntajes).forEach(fortaleza => {
-            // Solo enviar el promedio como valor numérico (redondeado a entero)
-            puntajesSimplificados[fortaleza] = Math.round(puntajes[fortaleza].promedio);
+            // Enviar la estructura completa: promedio, suma, nivel
+            puntajesCompletos[fortaleza] = {
+                promedio: puntajes[fortaleza].promedio,
+                suma: puntajes[fortaleza].suma || 0,
+                nivel: puntajes[fortaleza].nivel || 'Bajo'
+            };
         });
 
         const resultado = {
@@ -40,7 +44,7 @@ export async function guardarResultado(respuestas, puntajes, tipoTest) {
             tipoTest,
             fecha: new Date().toISOString(),
             respuestas: respuestasMap,
-            puntajes: puntajesSimplificados
+            puntajes: puntajesCompletos
         };
         
         const token = userData.token.trim();

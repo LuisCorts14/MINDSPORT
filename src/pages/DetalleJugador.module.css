@@ -1,152 +1,296 @@
 .detalleContainer {
-  background: #ffffff;
-  padding: 28px;
-  border-radius: 10px;
-  box-shadow: 0 4px 18px rgba(0,0,0,0.1);
   width: 100%;
+  max-width: 1100px;
+  margin: 0 auto 32px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.infoSection {
-  background: #f9fdf9;
-  border: 1px solid #d6eddc;
+/* Header */
+.header {
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.header h1 {
+  font-size: 14px;
+  color: #7a8a99;
+  margin: 0 0 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+
+.header h2 {
+  font-size: 32px;
+  color: #1a1a1a;
+  margin: 0;
+  font-weight: 700;
+}
+
+/* Bloque de info básica */
+.infoGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Tarjetas pequeñas */
+.infoCard {
+  background: linear-gradient(135deg, #f8f9fa 0%, #f0f2f5 100%);
+  border: 1px solid #e9ecef;
   border-radius: 10px;
   padding: 20px;
-  margin-bottom: 25px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  transition: all 0.3s ease;
 }
 
-.infoSection label {
-  display: block;
-  margin: 10px 0;
-  font-weight: 500;
-}
-
-.infoSection input, .infoSection textarea, .infoSection select {
-  width: 100%;
-  border: 1px solid #cdd7df;
-  border-radius: 6px;
-  padding: 8px;
-  margin-top: 4px;
-  font-size: 15px;
-  outline-color: #31b27d;
-  background-color: white;
-}
-
-/* Estilos específicos para el select de posición */
-.posicionSelect {
-  cursor: pointer;
-  background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2331b27d' stroke-width='2'><polyline points='6,9 12,15 18,9'></polyline></svg>");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 18px;
-  padding-right: 40px;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-
-.posicionSelect:hover {
+.infoCard:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
   border-color: #31b27d;
+}
+
+.cardIcon {
+  font-size: 28px;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.infoCard label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.infoCard input,
+.infoCard textarea,
+.infoCard select {
+  width: 100%;
+  border: 1px solid #d0d8e0;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  background-color: white;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.infoCard input:focus,
+.infoCard textarea:focus,
+.infoCard select:focus {
+  border-color: #31b27d;
+  box-shadow: 0 0 0 3px rgba(49, 178, 125, 0.1);
   background-color: #f9fdf9;
 }
 
-.posicionSelect:focus {
-  border-color: #31b27d;
-  box-shadow: 0 0 0 3px rgba(49, 178, 125, 0.1);
-  outline: none;
-  background-color: white;
+/* Select posición */
+.posicionSelect {
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2331b27d' stroke-width='2'><polyline points='6,9 12,15 18,9'></polyline></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+  padding-right: 36px;
 }
 
-.posicionSelect option {
-  padding: 12px;
-  font-size: 14px;
-  line-height: 1.4;
-  background-color: white;
+/* Layout 2 Columnas */
+.twoColumnLayout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  align-items: start;
 }
 
-.posicionSelect option:first-child {
-  color: #999;
-  font-style: italic;
-  background-color: #f8f9fa;
-}
-
-.posicionSelect option:hover {
-  background-color: #f0f9f4;
-}
-
-.posicionSelect option:disabled {
-  color: #999 !important;
-  background-color: #f8f9fa !important;
-  cursor: not-allowed;
-}
-
-/* Contenedor de botones */
-.buttonContainer {
+.leftColumn {
   display: flex;
-  gap: 12px;
-  margin-top: 16px;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.leftColumn .infoGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.rightColumn {
+  display: flex;
+  align-items: start;
+}
+
+.introBox {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border-left: 4px solid #2196F3;
+  line-height: 1.6;
+  width: 100%;
+}
+
+.introBox h3 {
+  margin: 0 0 0.8rem 0;
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+}
+
+.introBox p {
+  margin: 0.5rem 0;
+  font-size: 13px;
+  color: #555;
+}
+
+.introBox ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.8rem 0;
+}
+
+.introBox li {
+  font-size: 13px;
+  color: #555;
+  padding: 0.3rem 0 0.3rem 1.2rem;
+  position: relative;
+}
+
+.introBox li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #2196F3;
+  font-weight: bold;
+}
+
+.introBox h4 {
+  margin: 1rem 0 0.8rem 0;
+  font-size: 13px;
+  color: #333;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.testDescription {
+  margin-bottom: 1rem;
+  padding: 0.8rem;
+  background: rgba(33, 150, 243, 0.05);
+  border-radius: 6px;
+  border-left: 3px solid #2196F3;
+}
+
+.testDescription strong {
+  display: block;
+  font-size: 13px;
+  color: #2196F3;
+  margin-bottom: 0.3rem;
+}
+
+.testDescription p {
+  margin: 0;
+  font-size: 12px;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* Botones */
+.actionButtons {
+  display: flex;
+  gap: 10px;
   flex-wrap: wrap;
+}
+
+.buttonGuardar,
+.buttonHistorial {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
 }
 
 .buttonGuardar {
   background: #31b27d;
   color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 14px;
-  transition: all 0.2s ease;
-  flex: 1;
-  min-width: 140px;
 }
 
 .buttonGuardar:hover {
   background: #2a9468;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(49, 178, 125, 0.3);
+  box-shadow: 0 2px 8px rgba(49, 178, 125, 0.3);
 }
 
 .buttonHistorial {
   background: #2196F3;
   color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 14px;
-  transition: all 0.2s ease;
-  flex: 1;
-  min-width: 180px;
 }
 
 .buttonHistorial:hover {
   background: #1976D2;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(33, 150, 243, 0.3);
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
 }
 
-.graficoSection {
-  background: #f9faff;
-  border: 1px solid #d9e4f3;
-  border-radius: 10px;
-  padding: 18px;
-}
-
+/* Botón volver */
 .buttonCerrar {
-  margin-top: 20px;
+  align-self: flex-start;
+  padding: 8px 16px;
   background: #2779fc;
   color: white;
   border: none;
-  padding: 10px 18px;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  margin-top: 1.5rem;
 }
 
 .buttonCerrar:hover {
-  background: #1b5edb;
+  background: #1d5bc7;
+  box-shadow: 0 2px 8px rgba(39, 121, 252, 0.3);
+}
+
+@media (max-width: 768px) {
+  .detalleContainer {
+    padding: 0 8px;
+  }
+
+  .header h2 {
+    font-size: 24px;
+  }
+
+  .twoColumnLayout {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .leftColumn .infoGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .actionButtons {
+    flex-direction: column;
+  }
+
+  .buttonGuardar,
+  .buttonHistorial {
+    min-width: auto;
+  }
+
+  .introBox {
+    padding: 1.2rem;
+  }
 }

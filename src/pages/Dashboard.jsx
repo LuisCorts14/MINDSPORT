@@ -153,24 +153,54 @@ function Dashboard() {
                           marginBottom: 24,
                         }}
                       >
-                        <h3>Bienvenido a MindSport</h3>
-                        <p>
+                        <h3 style={{
+                          fontSize: '24px',
+                          fontWeight: '700',
+                          color: '#1abc53',
+                          margin: '0 0 20px 0',
+                          letterSpacing: '-0.3px'
+                        }}>Bienvenido a MindSport</h3>
+                        <p style={{
+                          fontSize: '15px',
+                          lineHeight: 1.7,
+                          color: '#1a1a1a',
+                          fontWeight: '500',
+                          marginBottom: '14px'
+                        }}>
                           Esta plataforma está diseñada para ayudarte a conocer y
                           mejorar tus fortalezas mentales importantes para el fútbol.
                           Podrás responder dos tests científicos: el IED y el IPED.
                         </p>
-                        <p>
+                        <p style={{
+                          fontSize: '15px',
+                          lineHeight: 1.7,
+                          color: '#1a1a1a',
+                          fontWeight: '500',
+                          marginBottom: '14px'
+                        }}>
                           Después de cada test, recibirás una puntuación detallada
                           junto con recomendaciones y materiales informativos para
                           ayudarte a mejorar.
                         </p>
-                        <p>
+                        <p style={{
+                          fontSize: '15px',
+                          lineHeight: 1.7,
+                          color: '#1a1a1a',
+                          fontWeight: '500',
+                          marginBottom: '14px'
+                        }}>
                           Cuando hayas completado la lectura, repite el test para
                           monitorear tu evolución. La plataforma almacenará tus
                           resultados y visualizará tu progreso en el gráfico de la
                           derecha.
                         </p>
-                        <p>¡Comienza tu camino hacia la excelencia mental deportiva!</p>
+                        <p style={{
+                          fontSize: '15px',
+                          lineHeight: 1.7,
+                          color: '#1abc53',
+                          fontWeight: '600',
+                          marginBottom: '0'
+                        }}>¡Comienza tu camino hacia la excelencia mental deportiva!</p>
                       </div>
                       <div
                         className={styles.testSelectionContainer}
@@ -206,8 +236,20 @@ function Dashboard() {
                             e.target.style.borderColor = "transparent";
                           }}
                         >
-                          <h2>IED</h2>
-                          <p>
+                          <h2 style={{
+                            fontSize: '22px',
+                            fontWeight: '700',
+                            color: '#007bff',
+                            margin: '0 0 16px 0',
+                            letterSpacing: '-0.3px'
+                          }}>IED</h2>
+                          <p style={{
+                            fontSize: '15px',
+                            lineHeight: 1.7,
+                            color: '#1a1a1a',
+                            fontWeight: '500',
+                            marginBottom: '20px'
+                          }}>
                             Evalúa tu capacidad de reconocer, regular y utilizar tus
                             emociones en el juego. Recibe recomendaciones prácticas
                             y análisis de tu perfil emocional.
@@ -248,8 +290,20 @@ function Dashboard() {
                             e.target.style.borderColor = "transparent";
                           }}
                         >
-                          <h2>IPED</h2>
-                          <p>
+                          <h2 style={{
+                            fontSize: '22px',
+                            fontWeight: '700',
+                            color: '#6a4fff',
+                            margin: '0 0 16px 0',
+                            letterSpacing: '-0.3px'
+                          }}>IPED</h2>
+                          <p style={{
+                            fontSize: '15px',
+                            lineHeight: 1.7,
+                            color: '#1a1a1a',
+                            fontWeight: '500',
+                            marginBottom: '20px'
+                          }}>
                             Descubre tu perfil psicológico deportivo: autoconfianza,
                             control emocional, actitud, concentración y más.
                             Conócete mejor y mejora tu rendimiento con

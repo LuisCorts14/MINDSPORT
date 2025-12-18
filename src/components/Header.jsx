@@ -13,16 +13,21 @@ function Header({ showLogout = false, user }) {
 
   const titleStyle = {
     color: 'var(--primary-color, #009688)', 
-    margin: '0 0 8px 0',
-    fontSize: 'var(--font-size-2xl, 24px)',
-    fontWeight: 'var(--font-weight-bold, 600)'
+    margin: '0 0 12px 0',
+    fontSize: 'var(--font-size-2xl, 28px)',
+    fontWeight: 'var(--font-weight-bold, 700)',
+    letterSpacing: '-0.5px'
   };
 
   const subtitleStyle = {
-    fontSize: 'var(--font-size-lg, 18px)',
-    color: 'var(--gray-700, #333)',
-    fontWeight: 'var(--font-weight-normal, 400)',
-    margin: 0
+    fontSize: 'var(--font-size-base, 14px)',
+    color: 'var(--gray-600, #666)',
+    fontWeight: 'var(--font-weight-medium, 500)',
+    margin: 0,
+    letterSpacing: '0.3px',
+    lineHeight: '1.5',
+    textTransform: 'uppercase',
+    opacity: 0.85
   };
 
   const logoutButtonStyle = {

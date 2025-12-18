@@ -70,15 +70,16 @@
 }
 
 .btnVista {
-  padding: 10px 16px;
+  padding: 12px 20px;
   border: 2px solid #ddd;
   background: white;
   border-radius: 8px;
   cursor: pointer;
-  font-weight: 600;
-  font-size: 14px;
+  font-weight: 700;
+  font-size: 15px;
   transition: all 0.3s ease;
-  color: #333;
+  color: #1a1a1a;
+  letter-spacing: 0.2px;
 }
 
 .btnVista:hover {

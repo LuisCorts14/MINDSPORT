@@ -9,7 +9,7 @@ Plataforma integral de evaluación psicológica deportiva para futbolistas y ent
 
 #### Frontend (React)
 - ✅ Sistema de autenticación (futbolista/entrenador)
-- ✅ Tests psicométricos IED (5 dimensiones) e IPED (8 dimensiones)
+- ✅ Tests psicométricos IED (4 dimensiones) e IPED (7 dimensiones)
 - ✅ Visualización de resultados con recomendaciones
 - ✅ Dashboard del futbolista con gráficos de progreso
 - ✅ Dashboard del entrenador con gestión de futbolistas

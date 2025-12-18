@@ -13,6 +13,15 @@ import { calcularPuntajes } from '../services/resultadoService';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
+// Función para capitalizar texto
+const capitalizarFortaleza = (texto) => {
+  return texto
+    .replace(/_/g, ' ')
+    .split(' ')
+    .map(palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1))
+    .join(' ');
+};
+
 // Configuración específica para cada test
 const configuracionTests = {
   IED: {
@@ -172,7 +181,7 @@ const AnalisisResultados = ({ resultado }) => {
 
   // Preparar datos para el gráfico
   const labels = Object.keys(puntajesCalculados).map(dimension => 
-    config.dimensiones[dimension]?.nombre || dimension.replace(/_/g, ' ')
+    config.dimensiones[dimension]?.nombre || capitalizarFortaleza(dimension)
   );
   
   const valores = Object.values(puntajesCalculados);
@@ -190,6 +199,8 @@ const AnalisisResultados = ({ resultado }) => {
         borderColor: 'rgba(26, 188, 83, 1)',
         borderWidth: 2,
         borderRadius: 8,
+        barPercentage: 0.5,
+        categoryPercentage: 0.6,
       },
     ],
   };
@@ -267,7 +278,7 @@ const AnalisisResultados = ({ resultado }) => {
 
         <div>
           <h3 className="text-lg font-semibold mb-4 text-gray-700">Resultados Detallados</h3>
-          <div className="space-y-4 max-h-96 overflow-y-auto">
+          <div className="space-y-3 max-h-96 overflow-y-auto">
             {Object.entries(puntajesCalculados).map(([dimension, puntaje]) => {
               const dimConfig = config.dimensiones[dimension];
               if (!dimConfig) return null;
@@ -276,23 +287,39 @@ const AnalisisResultados = ({ resultado }) => {
               const colorNivel = getNivelColor(puntaje);
 
               return (
-                <div key={dimension} className="bg-gray-50 p-4 rounded-lg border">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <span className="text-xl">{dimConfig.icono}</span>
-                      <h4 className="font-semibold text-gray-800">{dimConfig.nombre}</h4>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-lg font-bold" style={{ color: colorNivel }}>
-                        {puntaje.toFixed(1)}/5.0
-                      </span>
-                      <div className={`text-sm px-2 py-1 rounded text-white ml-2 inline-block`} 
-                           style={{ backgroundColor: colorNivel }}>
-                        {nivel}
+                <div key={dimension} className="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                  {/* Header con nombre y puntaje */}
+                  <div className="px-4 py-3 border-b border-gray-200">
+                    <div className="flex items-center justify-between gap-4">
+                      {/* Badge del nombre */}
+                      <div className="flex-1 inline-block px-4 py-2 rounded-lg font-700 text-15px" style={{ 
+                        backgroundColor: colorNivel + '20',
+                        color: colorNivel,
+                        border: `2px solid ${colorNivel}30`,
+                        maxWidth: 'fit-content'
+                      }}>
+                        {dimConfig.nombre}
+                      </div>
+                      
+                      {/* Puntaje y nivel */}
+                      <div className="text-right flex-shrink-0">
+                        <span className="text-18px font-bold" style={{ color: colorNivel }}>
+                          {puntaje.toFixed(1)}/5.0
+                        </span>
+                        <span className="text-xs font-600 ml-2 px-2 py-1 rounded" style={{ 
+                          color: colorNivel, 
+                          backgroundColor: colorNivel + '15'
+                        }}>
+                          {nivel}
+                        </span>
                       </div>
                     </div>
                   </div>
-                  <p className="text-gray-600 text-sm">{dimConfig.descripcion}</p>
+                  
+                  {/* Descripción */}
+                  <div className="px-4 py-3">
+                    <p className="text-gray-700 text-14px font-500 leading-relaxed">{dimConfig.descripcion}.</p>
+                  </div>
                 </div>
               );
             })}

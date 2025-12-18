@@ -256,7 +256,7 @@ function DashboardEntrenador() {
                             variant="primary"
                             size="small"
                           >
-                            👁️ Ver ficha
+                             Ver ficha
                           </UnifiedButton>
                         </td>
                       </tr>
@@ -278,7 +278,9 @@ function DashboardEntrenador() {
                 {mostrarHistorial && jugadorHistorial && (
                   <div className={styles.historialContainer}>
                     <div className={styles.historialHeader}>
-                      <h3>📝 Historial de Notas - {jugadorHistorial.nombre}</h3>
+                      <h3 style={{ margin: 0, fontSize: '22px', fontWeight: '700', color: '#1a1a1a' }}>
+                        Historial de Notas - {jugadorHistorial.nombre}
+                      </h3>
                       <button 
                         onClick={() => setMostrarHistorial(false)}
                         className={styles.buttonCerrarHistorial}
@@ -292,6 +294,7 @@ function DashboardEntrenador() {
                         <div className={styles.notasList}>
                           {historialNotas.map((nota) => (
                             <div key={nota.id} className={styles.notaItem}>
+                              {/* Fecha */}
                               <div className={styles.notaFecha}>
                                 {new Date(nota.fecha).toLocaleDateString('es-ES', {
                                   day: '2-digit',
@@ -299,18 +302,17 @@ function DashboardEntrenador() {
                                   year: 'numeric'
                                 })}
                               </div>
+                              
+                              {/* Contenido de la nota */}
                               <div className={styles.notaTexto}>
                                 {nota.nota}
-                              </div>
-                              <div className={styles.notaEntrenador}>
-                                Por: {nota.entrenador}
                               </div>
                             </div>
                           ))}
                         </div>
                       ) : (
                         <div className={styles.noHistorial}>
-                          <p>📋 No hay notas registradas para este futbolista</p>
+                          <p> No hay notas registradas para este futbolista</p>
                           <small>Las notas se guardan cada vez que actualizas el campo "Notas adicionales"</small>
                         </div>
                       )}
@@ -367,14 +369,27 @@ function DashboardEntrenador() {
                 </div>
               </div>
               
+              {selectedJugador && (
+                <div className={styles.modalOverlay} onClick={() => setSelectedJugador(null)}>
+                  <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+                    <button
+                      onClick={() => setSelectedJugador(null)}
+                      className={styles.closeButton}
+                      title="Cerrar ficha"
+                    >
+                      ✕
+                    </button>
+                    <DetalleJugador
+                      jugador={selectedJugador}
+                      onCerrar={() => setSelectedJugador(null)}
+                      onMostrarHistorial={handleMostrarHistorial}
+                    />
+                  </div>
+                </div>
+              )}
+              
               <div className={styles.rightCol}>
-                {selectedJugador ? (
-                  <DetalleJugador
-                    jugador={selectedJugador}
-                    onCerrar={() => setSelectedJugador(null)}
-                    onMostrarHistorial={handleMostrarHistorial}
-                  />
-                ) : (
+                {!selectedJugador && (
                   <>
                     {futbolistas.length > 0 ? (
                       <>
@@ -399,7 +414,7 @@ function DashboardEntrenador() {
                               transition: 'all 0.3s ease'
                             }}
                           >
-                            IED (5 Dimensiones)
+                            IED (4 Dimensiones)
                           </button>
                           <button
                             onClick={() => setTestTypeEstadisticas('IPED')}
@@ -415,7 +430,7 @@ function DashboardEntrenador() {
                               transition: 'all 0.3s ease'
                             }}
                           >
-                            IPED (8 Dimensiones)
+                            IPED (7 Dimensiones)
                           </button>
                         </div>
                         <EstadisticasGrupo futbolistas={futbolistas} testType={testTypeEstadisticas} />

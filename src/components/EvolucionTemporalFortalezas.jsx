@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { Bar, Line } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
-  BarElement,
   Title,
   Tooltip,
   Legend,
@@ -19,22 +18,45 @@ ChartJS.register(
   LinearScale,
   PointElement,
   LineElement,
-  BarElement,
   Title,
   Tooltip,
   Legend
 );
 
-function EvolucionTemporalFortalezas({ testType = 'IED', jugadorId = null, resultados = [] }) {
+// Función para capitalizar texto
+const capitalizarFortaleza = (texto) => {
+  return texto
+    .replace(/_/g, ' ')
+    .split(' ')
+    .map(palabra => palabra.charAt(0).toUpperCase() + palabra.slice(1))
+    .join(' ');
+};
+
+function EvolucionTemporalFortalezas({ resultadosIED = [], resultadosIPED = [], jugadorId = null }) {
   const [selectedFortaleza, setSelectedFortaleza] = useState(null);
-  const [vistaGrafico, setVistaGrafico] = useState('linea'); // 'linea' o 'barras'
+  const [testActivo, setTestActivo] = useState('IED');
 
-  // Filtrar resultados por tipo de test
-  const resultadosFiltrados = resultados.filter(r => 
-    r.tipoTest === testType || r.test === testType
-  );
+  // Filtrar resultados por tipo de test activo
+  const resultadosFiltrados = testActivo === 'IED' ? resultadosIED : resultadosIPED;
 
-  if (resultadosFiltrados.length < 2) {
+  // Obtener solo las fortalezas válidas para este tipo de test
+  const fortalezasDelTest = testActivo === 'IED' 
+    ? Object.keys(fortalezasIED).sort()
+    : Object.keys(fortalezasIPED).sort();
+
+  // Resetear fortaleza seleccionada cuando cambia de test
+  const fortalezaActual = (selectedFortaleza && fortalezasDelTest.includes(selectedFortaleza))
+    ? selectedFortaleza
+    : fortalezasDelTest[0];
+
+  // Filtrar resultados que tengan puntajes válidos
+  const resultadosConPuntajes = resultadosFiltrados.filter(r => {
+    if (!r.puntajes || Object.keys(r.puntajes).length === 0) return false;
+    if (!r.puntajes[fortalezaActual]) return false;
+    return true;
+  });
+
+  if (resultadosFiltrados.length < 2 || resultadosConPuntajes.length < 2) {
     return (
       <div style={{
         marginTop: '2rem',
@@ -47,32 +69,20 @@ function EvolucionTemporalFortalezas({ testType = 'IED', jugadorId = null, resul
         <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📊</div>
         <h3 style={{ color: '#666' }}>Evolución Temporal</h3>
         <p style={{ color: '#999' }}>
-          Se necesitan al menos 2 intentos para visualizar la evolución.
+          Se necesitan al menos 2 intentos con datos válidos para visualizar la evolución.
           {jugadorId ? ' Este futbolista debe completar el test más veces.' : ' Completa el test varias veces para ver tu progreso.'}
         </p>
       </div>
     );
   }
 
-  // Obtener solo las fortalezas válidas para este tipo de test
-  const fortalezasDelTest = testType === 'IED' 
-    ? Object.keys(fortalezasIED).sort()
-    : Object.keys(fortalezasIPED).sort();
-
-  // Seleccionar primera fortaleza por defecto
-  const fortalezaActual = selectedFortaleza || fortalezasDelTest[0];
-
   // Preparar datos para la fortaleza seleccionada
-  const fechas = resultadosFiltrados.map(r => {
-    const fecha = new Date(r.fecha || r.fechaRealizacion);
-    return fecha.toLocaleDateString('es-CL', {
-      day: '2-digit',
-      month: 'short',
-      year: '2-digit'
-    });
-  });
-
-  const puntajesPorFortaleza = resultadosFiltrados.map(r => {
+  const puntajesPorFortaleza = resultadosConPuntajes.map((r, idx) => {
+    // Validar que puntajes exista
+    if (!r.puntajes) {
+      return 0;
+    }
+    
     const puntaje = r.puntajes[fortalezaActual];
     // Manejar tanto objetos con promedio como números simples
     if (typeof puntaje === 'object' && puntaje !== null && 'promedio' in puntaje) {
@@ -81,6 +91,23 @@ function EvolucionTemporalFortalezas({ testType = 'IED', jugadorId = null, resul
     // Si es un número simple, usarlo directamente
     return typeof puntaje === 'number' ? puntaje : 0;
   });
+
+  // Filtrar solo datos con valores reales (no ceros)
+  const datosConValores = resultadosConPuntajes
+    .map((r, index) => ({
+      resultado: r,
+      puntaje: puntajesPorFortaleza[index],
+      fecha: new Date(r.fecha || r.fechaRealizacion).toLocaleDateString('es-CL', {
+        day: '2-digit',
+        month: 'short',
+        year: '2-digit'
+      })
+    }))
+    .filter(d => d.puntaje > 0);
+
+  // Extraer fechas y puntajes filtrados
+  const fechas = datosConValores.map(d => d.fecha);
+  const puntajesActualizados = datosConValores.map(d => d.puntaje);
 
   // Obtener valor máximo para la escala
   const maxPuntaje = 5;
@@ -93,15 +120,15 @@ function EvolucionTemporalFortalezas({ testType = 'IED', jugadorId = null, resul
     return '#e74c3c'; // Bajo - Rojo
   };
 
-  const coloresBarras = puntajesPorFortaleza.map(p => getColorPorNivel(p));
+  const coloresBarras = puntajesActualizados.map(p => getColorPorNivel(p));
 
   // Datos para gráfico de línea
   const dataLinea = {
     labels: fechas,
     datasets: [
       {
-        label: fortalezaActual.replace(/_/g, ' '),
-        data: puntajesPorFortaleza,
+        label: capitalizarFortaleza(fortalezaActual),
+        data: puntajesActualizados,
         fill: true,
         backgroundColor: 'rgba(26, 188, 83, 0.1)',
         borderColor: '#1abc53',
@@ -115,22 +142,6 @@ function EvolucionTemporalFortalezas({ testType = 'IED', jugadorId = null, resul
       }
     ]
   };
-
-  // Datos para gráfico de barras
-  const dataBarras = {
-    labels: fechas,
-    datasets: [
-      {
-        label: fortalezaActual.replace(/_/g, ' '),
-        data: puntajesPorFortaleza,
-        backgroundColor: coloresBarras,
-        borderColor: coloresBarras,
-        borderWidth: 2,
-        borderRadius: 8,
-      }
-    ]
-  };
-
   const optionesComunes = {
     responsive: true,
     maintainAspectRatio: false,
@@ -144,7 +155,7 @@ function EvolucionTemporalFortalezas({ testType = 'IED', jugadorId = null, resul
       },
       title: {
         display: true,
-        text: `Evolución de ${fortalezaActual.replace(/_/g, ' ').toUpperCase()} - Test ${testType}`,
+        text: `Evolución de ${capitalizarFortaleza(fortalezaActual).toUpperCase()} - Test ${testActivo}`,
         font: { size: 16, weight: 'bold' },
         color: '#333',
         padding: 20
@@ -202,9 +213,54 @@ function EvolucionTemporalFortalezas({ testType = 'IED', jugadorId = null, resul
 
   return (
     <div style={{ marginTop: '2rem', backgroundColor: '#fff', padding: '2rem', borderRadius: '12px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-      <h2 style={{ marginBottom: '1.5rem', color: '#333', fontSize: '1.8rem' }}>
-        📈 Evolución Temporal por Fortaleza
-      </h2>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '2rem',
+          gap: '16px',
+          flexWrap: 'wrap'
+        }}
+      >
+        <h2 style={{ color: '#333', fontSize: '1.8rem', marginBottom: 0 }}>
+          Evolución Temporal por Fortaleza
+        </h2>
+        <div style={{ display: 'flex', gap: '10px' }}>
+          <button
+            onClick={() => setTestActivo('IED')}
+            style={{
+              padding: '8px 16px',
+              background: testActivo === 'IED' ? '#1abc53' : '#e0e0e0',
+              color: testActivo === 'IED' ? 'white' : '#333',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontWeight: '600',
+              fontSize: '13px',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            IED
+          </button>
+          <button
+            onClick={() => setTestActivo('IPED')}
+            style={{
+              padding: '8px 16px',
+              background: testActivo === 'IPED' ? '#1abc53' : '#e0e0e0',
+              color: testActivo === 'IPED' ? 'white' : '#333',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontWeight: '600',
+              fontSize: '13px',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            IPED
+          </button>
+        </div>
+      </div>
 
       {/* Controles */}
       <div style={{
@@ -215,7 +271,7 @@ function EvolucionTemporalFortalezas({ testType = 'IED', jugadorId = null, resul
         alignItems: 'center'
       }}>
         {/* Selector de Fortaleza */}
-        <div style={{ flex: 1, minWidth: '250px' }}>
+        <div style={{ width: '320px' }}>
           <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', color: '#333' }}>
             Selecciona una fortaleza:
           </label>
@@ -235,59 +291,18 @@ function EvolucionTemporalFortalezas({ testType = 'IED', jugadorId = null, resul
           >
             {fortalezasDelTest.map(fortaleza => (
               <option key={fortaleza} value={fortaleza}>
-                {fortaleza.replace(/_/g, ' ')}
+                {capitalizarFortaleza(fortaleza)}
               </option>
             ))}
           </select>
         </div>
 
-        {/* Selector de tipo de gráfico */}
-        <div>
-          <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', color: '#333' }}>
-            Tipo de gráfico:
-          </label>
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <button
-              onClick={() => setVistaGrafico('linea')}
-              style={{
-                padding: '0.75rem 1.5rem',
-                border: `2px solid ${vistaGrafico === 'linea' ? '#1abc53' : '#ddd'}`,
-                backgroundColor: vistaGrafico === 'linea' ? '#1abc53' : '#fff',
-                color: vistaGrafico === 'linea' ? '#fff' : '#333',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                fontWeight: 'bold',
-                transition: 'all 0.3s'
-              }}
-            >
-              📊 Línea
-            </button>
-            <button
-              onClick={() => setVistaGrafico('barras')}
-              style={{
-                padding: '0.75rem 1.5rem',
-                border: `2px solid ${vistaGrafico === 'barras' ? '#1abc53' : '#ddd'}`,
-                backgroundColor: vistaGrafico === 'barras' ? '#1abc53' : '#fff',
-                color: vistaGrafico === 'barras' ? '#fff' : '#333',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                fontWeight: 'bold',
-                transition: 'all 0.3s'
-              }}
-            >
-              📈 Barras
-            </button>
-          </div>
-        </div>
+
       </div>
 
       {/* Gráfico */}
       <div style={{ height: '400px', marginBottom: '2rem', position: 'relative' }}>
-        {vistaGrafico === 'linea' ? (
-          <Line data={dataLinea} options={optionesComunes} />
-        ) : (
-          <Bar data={dataBarras} options={optionesComunes} />
-        )}
+        <Line data={dataLinea} options={optionesComunes} />
       </div>
 
       {/* Comparación Período a Período - Todas las Fortalezas */}
@@ -299,7 +314,7 @@ function EvolucionTemporalFortalezas({ testType = 'IED', jugadorId = null, resul
           borderLeft: '4px solid #1abc53',
           marginBottom: '1.5rem'
         }}>
-          <h3 style={{ marginBottom: '1rem', color: '#333' }}>📊 Comparación Período a Período - Todas las Fortalezas</h3>
+          <h3 style={{ marginBottom: '1rem', color: '#333' }}>Comparación Período a Período - Todas las Fortalezas</h3>
           <div style={{
             backgroundColor: '#fff',
             padding: '1rem',
@@ -334,7 +349,7 @@ function EvolucionTemporalFortalezas({ testType = 'IED', jugadorId = null, resul
               const porcentajeCambio = valAnterior !== 0 ? ((cambio / valAnterior) * 100) : 0;
               
               const colorTendencia = cambio > 0 ? '#1abc53' : (cambio < 0 ? '#e74c3c' : '#f39c12');
-              const iconoTendencia = cambio > 0 ? '📈' : (cambio < 0 ? '📉' : '➡️');
+              const iconoTendencia = cambio > 0 ? '▲' : (cambio < 0 ? '▼' : '─');
               
               return (
                 <div key={fortaleza} style={{
@@ -345,7 +360,7 @@ function EvolucionTemporalFortalezas({ testType = 'IED', jugadorId = null, resul
                 }}>
                   <div style={{ marginBottom: '0.75rem' }}>
                     <strong style={{ color: '#333', fontSize: '0.95rem' }}>
-                      {fortaleza.replace(/_/g, ' ')}
+                      {capitalizarFortaleza(fortaleza)}
                     </strong>
                   </div>
                   
@@ -394,17 +409,17 @@ function EvolucionTemporalFortalezas({ testType = 'IED', jugadorId = null, resul
         borderRadius: '8px',
         borderLeft: '4px solid #1abc53'
       }}>
-        <h3 style={{ marginBottom: '1rem', color: '#333' }}>📊 Estadísticas Generales</h3>
+        <h3 style={{ marginBottom: '1rem', color: '#333' }}>Estadísticas Generales</h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
           <div>
             <strong style={{ color: '#666' }}>Puntaje Actual:</strong>
             <div style={{
               fontSize: '1.8rem',
-              color: getColorPorNivel(puntajesPorFortaleza[puntajesPorFortaleza.length - 1]),
+              color: getColorPorNivel(puntajesActualizados[puntajesActualizados.length - 1]),
               fontWeight: 'bold',
               marginTop: '0.5rem'
             }}>
-              {puntajesPorFortaleza[puntajesPorFortaleza.length - 1].toFixed(2)}/5.0
+              {puntajesActualizados[puntajesActualizados.length - 1].toFixed(2)}/5.0
             </div>
           </div>
           <div>
@@ -415,7 +430,7 @@ function EvolucionTemporalFortalezas({ testType = 'IED', jugadorId = null, resul
               fontWeight: 'bold',
               marginTop: '0.5rem'
             }}>
-              {Math.max(...puntajesPorFortaleza).toFixed(2)}/5.0
+              {Math.max(...puntajesActualizados).toFixed(2)}/5.0
             </div>
           </div>
           <div>
@@ -426,18 +441,18 @@ function EvolucionTemporalFortalezas({ testType = 'IED', jugadorId = null, resul
               fontWeight: 'bold',
               marginTop: '0.5rem'
             }}>
-              {Math.min(...puntajesPorFortaleza).toFixed(2)}/5.0
+              {Math.min(...puntajesActualizados).toFixed(2)}/5.0
             </div>
           </div>
           <div>
             <strong style={{ color: '#666' }}>Variación Total:</strong>
             <div style={{
               fontSize: '1.8rem',
-              color: Math.max(...puntajesPorFortaleza) - Math.min(...puntajesPorFortaleza) > 0 ? '#f39c12' : '#1abc53',
+              color: Math.max(...puntajesActualizados) - Math.min(...puntajesActualizados) > 0 ? '#f39c12' : '#1abc53',
               fontWeight: 'bold',
               marginTop: '0.5rem'
             }}>
-              {(Math.max(...puntajesPorFortaleza) - Math.min(...puntajesPorFortaleza)).toFixed(2)}
+              {(Math.max(...puntajesActualizados) - Math.min(...puntajesActualizados)).toFixed(2)}
             </div>
           </div>
           <div>
@@ -448,7 +463,7 @@ function EvolucionTemporalFortalezas({ testType = 'IED', jugadorId = null, resul
               fontWeight: 'bold',
               marginTop: '0.5rem'
             }}>
-              {(puntajesPorFortaleza.reduce((a, b) => a + b, 0) / puntajesPorFortaleza.length).toFixed(2)}/5.0
+              {(puntajesActualizados.reduce((a, b) => a + b, 0) / puntajesActualizados.length).toFixed(2)}/5.0
             </div>
           </div>
         </div>
