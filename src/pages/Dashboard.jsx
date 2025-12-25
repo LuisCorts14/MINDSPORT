@@ -379,7 +379,13 @@ function Dashboard() {
                 </div>
                 <div className={styles.rightColumn}>
                   <h3>Tu progreso a lo largo del tiempo</h3>
-                  <p>
+                  <p style={{
+                    fontSize: '15px',
+                    lineHeight: 1.7,
+                    color: '#1a1a1a',
+                    fontWeight: '500',
+                    marginBottom: '14px'
+                  }}>
                     Visualiza cómo evolucionan tus fortalezas mentales cada vez que
                     repites los tests. Elige el test que deseas observar:
                   </p>

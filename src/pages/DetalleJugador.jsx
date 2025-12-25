@@ -227,7 +227,7 @@ function DetalleJugador({ jugador, onCerrar, onMostrarHistorial }) {
               onClick={() => onMostrarHistorial && onMostrarHistorial(jugador)}
               className={styles.buttonHistorial}
             >
-              Ver historial
+              Ver historial de notas
             </button>
           </div>
         </div>

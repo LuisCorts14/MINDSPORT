@@ -231,26 +231,32 @@ function ProgresoGrafico({ testType = 'IED', jugadorId = null }) {
     plugins: {
       legend: {
         display: true,
+        position: 'top',
         labels: {
-          boxWidth: 18,
-          padding: 12,
-          font: { size: 12, weight: 'bold' }
+          boxWidth: 20,
+          padding: 16,
+          font: { size: 13, weight: '600' },
+          usePointStyle: true,
+          pointStyle: 'circle',
+          spacing: 20
         }
       },
       title: {
         display: true,
         text: `📊 Evolución del Test ${testType}`,
-        font: { size: 16, weight: 'bold' },
-        color: '#333',
-        padding: 20
+        font: { size: 18, weight: 'bold' },
+        color: '#1a1a1a',
+        padding: 24
       },
       tooltip: {
         mode: 'index',
         intersect: false,
-        backgroundColor: 'rgba(0,0,0,0.8)',
-        padding: 12,
-        titleFont: { size: 13, weight: 'bold' },
-        bodyFont: { size: 12 },
+        backgroundColor: 'rgba(0,0,0,0.85)',
+        padding: 14,
+        titleFont: { size: 14, weight: 'bold' },
+        bodyFont: { size: 13 },
+        borderColor: '#fff',
+        borderWidth: 1,
         callbacks: {
           label: function(context) {
             return context.dataset.label + ': ' + context.parsed.y.toFixed(2);
@@ -269,15 +275,15 @@ function ProgresoGrafico({ testType = 'IED', jugadorId = null }) {
         max: 5,
         ticks: {
           stepSize: 0.5,
-          font: { size: 11 }
+          font: { size: 12, weight: '500' }
         },
         title: {
           display: true,
           text: 'Puntaje (0-5)',
-          font: { size: 12, weight: 'bold' }
+          font: { size: 13, weight: 'bold' }
         },
         grid: {
-          color: 'rgba(0,0,0,0.05)',
+          color: 'rgba(0,0,0,0.08)',
           drawBorder: true
         }
       },
@@ -303,11 +309,12 @@ function ProgresoGrafico({ testType = 'IED', jugadorId = null }) {
   return (
     <div style={{ 
       marginTop: 24, 
-      height: '400px',
+      height: '500px',
       backgroundColor: '#fff',
-      padding: '1.5rem',
+      padding: '20px',
       borderRadius: '12px',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+      boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
+      border: '1px solid #f0f0f0'
     }}>
       <Line data={data} options={options} />
     </div>
