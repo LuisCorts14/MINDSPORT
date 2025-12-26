@@ -72,4 +72,4 @@ mvn spring-boot:run
 
 ## 📅 Fecha de Desarrollo
 
-Desarrollado como proyecto de tesis - Diciembre 2024
+Desarrollado como proyecto de tesis - Diciembre 2025
